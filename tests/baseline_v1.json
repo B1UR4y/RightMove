@@ -1,0 +1,538 @@
+{
+ "01_stoyka": {
+  "count": 0,
+  "events": []
+ },
+ "02_pravilno_1": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 107,
+    "bottom": 139,
+    "end": 158,
+    "mn": 45.6,
+    "mx": 168.3
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 179,
+    "bottom": 215,
+    "end": 237,
+    "mn": 49.8,
+    "mx": 175.3
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 262,
+    "bottom": 295,
+    "end": 317,
+    "mn": 56.4,
+    "mx": 172.8
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 337,
+    "bottom": 377,
+    "end": 397,
+    "mn": 52.3,
+    "mx": 174.3
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 425,
+    "bottom": 457,
+    "end": 478,
+    "mn": 54.5,
+    "mx": 173.5
+   }
+  ]
+ },
+ "03_pravilno_2": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 111,
+    "bottom": 141,
+    "end": 160,
+    "mn": 51.2,
+    "mx": 169.3
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 192,
+    "bottom": 225,
+    "end": 247,
+    "mn": 48.6,
+    "mx": 173.4
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 275,
+    "bottom": 309,
+    "end": 330,
+    "mn": 55.5,
+    "mx": 173.3
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 361,
+    "bottom": 393,
+    "end": 415,
+    "mn": 54.4,
+    "mx": 172.4
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 442,
+    "bottom": 478,
+    "end": 498,
+    "mn": 47.5,
+    "mx": 175.6
+   }
+  ]
+ },
+ "04_pravilno_3": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 91,
+    "bottom": 122,
+    "end": 144,
+    "mn": 47.0,
+    "mx": 168.4
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 174,
+    "bottom": 209,
+    "end": 232,
+    "mn": 44.1,
+    "mx": 174.2
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 266,
+    "bottom": 300,
+    "end": 323,
+    "mn": 42.7,
+    "mx": 174.2
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 345,
+    "bottom": 391,
+    "end": 413,
+    "mn": 43.8,
+    "mx": 174.0
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 433,
+    "bottom": 477,
+    "end": 499,
+    "mn": 48.1,
+    "mx": 173.6
+   }
+  ]
+ },
+ "05_E1_nepolnyj": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 97,
+    "bottom": 122,
+    "end": 137,
+    "mn": 92.8,
+    "mx": 172.0
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 169,
+    "bottom": 195,
+    "end": 213,
+    "mn": 89.9,
+    "mx": 175.4
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 242,
+    "bottom": 268,
+    "end": 286,
+    "mn": 84.7,
+    "mx": 175.6
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 316,
+    "bottom": 342,
+    "end": 359,
+    "mn": 93.1,
+    "mx": 174.7
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 388,
+    "bottom": 416,
+    "end": 435,
+    "mn": 84.5,
+    "mx": 174.8
+   }
+  ]
+ },
+ "06_E2_naklon": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 103,
+    "bottom": 137,
+    "end": 156,
+    "mn": 71.4,
+    "mx": 172.1
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 204,
+    "bottom": 248,
+    "end": 269,
+    "mn": 74.9,
+    "mx": 176.3
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 286,
+    "bottom": 352,
+    "end": 378,
+    "mn": 78.1,
+    "mx": 175.8
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 397,
+    "bottom": 454,
+    "end": 479,
+    "mn": 66.5,
+    "mx": 174.0
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 499,
+    "bottom": 558,
+    "end": 582,
+    "mn": 63.0,
+    "mx": 174.0
+   }
+  ]
+ },
+ "07_E3_taz": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 35,
+    "bottom": 65,
+    "end": 86,
+    "mn": 62.3,
+    "mx": 171.5
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 126,
+    "bottom": 170,
+    "end": 191,
+    "mn": 70.1,
+    "mx": 173.5
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 249,
+    "bottom": 285,
+    "end": 303,
+    "mn": 68.5,
+    "mx": 172.7
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 354,
+    "bottom": 395,
+    "end": 414,
+    "mn": 66.4,
+    "mx": 170.3
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 441,
+    "bottom": 502,
+    "end": 521,
+    "mn": 54.2,
+    "mx": 169.5
+   }
+  ]
+ },
+ "08_E4_bez_vyprjamleniya": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 98,
+    "bottom": 127,
+    "end": 151,
+    "mn": 44.8,
+    "mx": 169.0
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 158,
+    "bottom": 184,
+    "end": 204,
+    "mn": 45.3,
+    "mx": 133.7
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 220,
+    "bottom": 248,
+    "end": 268,
+    "mn": 46.3,
+    "mx": 143.1
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 280,
+    "bottom": 308,
+    "end": 328,
+    "mn": 45.0,
+    "mx": 138.1
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 345,
+    "bottom": 370,
+    "end": 394,
+    "mn": 43.4,
+    "mx": 146.8
+   }
+  ]
+ },
+ "09_ugol30": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 84,
+    "bottom": 113,
+    "end": 132,
+    "mn": 41.4,
+    "mx": 171.4
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 166,
+    "bottom": 195,
+    "end": 215,
+    "mn": 45.7,
+    "mx": 170.7
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 251,
+    "bottom": 282,
+    "end": 303,
+    "mn": 50.3,
+    "mx": 170.6
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 334,
+    "bottom": 368,
+    "end": 389,
+    "mn": 39.6,
+    "mx": 172.5
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 424,
+    "bottom": 455,
+    "end": 475,
+    "mn": 41.7,
+    "mx": 170.6
+   }
+  ]
+ },
+ "10_ugol60": {
+  "count": 5,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 92,
+    "bottom": 117,
+    "end": 137,
+    "mn": 56.3,
+    "mx": 174.9
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 175,
+    "bottom": 202,
+    "end": 222,
+    "mn": 62.7,
+    "mx": 177.2
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 260,
+    "bottom": 290,
+    "end": 311,
+    "mn": 57.3,
+    "mx": 179.1
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 348,
+    "bottom": 376,
+    "end": 397,
+    "mn": 55.6,
+    "mx": 178.4
+   },
+   {
+    "valid": true,
+    "reason": "",
+    "start": 434,
+    "bottom": 463,
+    "end": 484,
+    "mn": 47.0,
+    "mx": 178.4
+   }
+  ]
+ },
+ "1659": {
+  "count": 1,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 4,
+    "bottom": 33,
+    "end": 98,
+    "mn": 75.2,
+    "mx": 175.8
+   }
+  ]
+ },
+ "1660": {
+  "count": 0,
+  "events": []
+ },
+ "1661": {
+  "count": 1,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 12,
+    "bottom": 43,
+    "end": 97,
+    "mn": 44.0,
+    "mx": 177.7
+   }
+  ]
+ },
+ "1662": {
+  "count": 0,
+  "events": []
+ },
+ "1663": {
+  "count": 1,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 3,
+    "bottom": 34,
+    "end": 80,
+    "mn": 75.3,
+    "mx": 175.9
+   }
+  ]
+ },
+ "1664": {
+  "count": 0,
+  "events": []
+ },
+ "1665": {
+  "count": 1,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 7,
+    "bottom": 54,
+    "end": 96,
+    "mn": 59.3,
+    "mx": 174.5
+   }
+  ]
+ },
+ "1666": {
+  "count": 1,
+  "events": [
+   {
+    "valid": true,
+    "reason": "",
+    "start": 9,
+    "bottom": 45,
+    "end": 66,
+    "mn": 72.5,
+    "mx": 169.3
+   }
+  ]
+ }
+}

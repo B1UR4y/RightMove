@@ -1,0 +1,27 @@
+__pycache__/
+*.pyc
+*.pt
+~$*
+*.tmp
+data/
+/halpe-26/hico_20160224_det/
+/halpe-26/val2017/
+/halpe-26/halpe_*_v*.json
+/halpe-26/*.zip
+/halpe-26/*.tar.gz
+recordings/*.mp4
+recordings/*.mov
+recordings/*.avi
+recordings/*.mkv
+recordings/cut/
+recordings/_check/
+recordings/Таблица_записей_исправлено.csv
+
+logs/
+recordings/live/
+dist/
+
+/claude_chat_export.md
+/Спринт*Командный проект*.docx
+/Otchyot_schyotchik_prisedaniy.docx
+/Оценка_техники_итоги.md
