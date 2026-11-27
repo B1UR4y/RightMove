@@ -271,3 +271,7 @@ dialog th:first-child, dialog td:first-child { text-align: left; }
 @media (max-width: 450px) {
   .buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+#correction:empty { display: none; }
+.hint[data-correction="error"] { border-color: #fb817b; }
+.hint[data-correction="warning"] { border-color: #f6c45b; }

@@ -20,6 +20,13 @@ const cues = {
   BOTTOM: "Возвращайтесь в исходное положение",
   ASCENT: "Закончите подъём",
 };
+const CORRECTION_MS = 4000;
+const corrections = {
+  E1: "Опускайтесь чуть ниже.",
+  E2: "Держите корпус чуть вертикальнее.",
+  E3: "Поднимайте таз и плечи вместе.",
+  E4: "Выпрямляйтесь в верхней точке.",
+};
 let active = null;
 let report = null;
 
@@ -160,6 +167,7 @@ function openReport() {
 async function finish(run, message = "", showReport = true) {
   if (active !== run || run.finishing) return;
   run.finishing = true;
+  showCorrection();
   const duration = run.started === null ? 0 : performance.now() - run.started;
   clearInterval(run.clock);
   clearTimeout(run.next);
@@ -226,12 +234,22 @@ function drawAssessment(frame) {
   }
 }
 
+function showCorrection(message = "", severity = "") {
+  const correction = $("correction");
+  if (correction.textContent !== message) correction.textContent = message;
+  $("hint").dataset.correction = severity;
+  visible("cue", !message);
+}
+
 function handleFrame(run, frame) {
   run.frame = frame;
   $("reps").textContent = frame.count;
   drawPose(frame);
   drawAssessment(frame);
   if (!frame.ready) {
+    run.correctionUntil = 0;
+    run.lastAssessment = frame.assessment?.attempt;
+    showCorrection();
     visible("phase", false);
     $("cue").textContent = frame.wrong_view && frame.calibration === 0
       ? "Повернитесь боком к камере."
@@ -240,17 +258,25 @@ function handleFrame(run, frame) {
   }
   if (run.started === null) run.started = performance.now();
   const assessment = frame.assessment;
+  const now = performance.now();
   if (assessment && assessment.attempt !== run.lastAssessment) {
     run.lastAssessment = assessment.attempt;
-    run.notice = assessment.issues[0]?.name || assessment.note ||
-      (assessment.score === null ? assessment.category : `Оценка повторения — ${assessment.score}/100`);
-    run.noticeUntil = performance.now() + 1800;
+    const codes = Object.keys(corrections);
+    const code = codes.find(key => assessment.rules[key] === "ошибка")
+      ?? codes.find(key => assessment.rules[key] === "предупреждение");
+    run.correction = code ? corrections[code] : "";
+    run.correctionStatus = code ? ruleStyles[assessment.rules[code]] : "";
+    run.correctionUntil = code ? now + CORRECTION_MS : 0;
+    run.assessmentNotice = assessment.note ?? "";
+    run.assessmentNoticeUntil = run.assessmentNotice ? now + CORRECTION_MS : 0;
   }
   visible("phase", frame.angle !== null);
   if (frame.angle !== null) $("phase").textContent = phases[frame.phase] + " · " + Math.round(frame.angle) + "°";
+  const showAdvice = frame.sides > 0 && now < run.correctionUntil;
+  showCorrection(showAdvice ? run.correction : "", showAdvice ? run.correctionStatus : "");
   $("cue").textContent = !frame.sides
     ? "Плечо, бедро, колено и лодыжка должны быть видны сбоку."
-    : performance.now() < run.noticeUntil ? run.notice : cues[frame.phase];
+    : now < run.assessmentNoticeUntil ? run.assessmentNotice : cues[frame.phase];
 }
 
 async function processFrame(run) {
@@ -280,7 +306,7 @@ async function processFrame(run) {
 
 async function start() {
   if (active) return;
-  const run = {stream: null, key: null, started: null, countdownDone: false, frameEpoch: 0, noticeUntil: 0};
+  const run = {stream: null, key: null, started: null, countdownDone: false, frameEpoch: 0, correctionUntil: 0};
   active = run;
   setChoices(false);
   $("exercise").disabled = $("btnStart").disabled = $("btnReport").disabled = true;
@@ -346,6 +372,8 @@ $("btnCalibrate").onclick = async () => {
   const run = active;
   if (!run || run.finishing || run.recalibration) return;
   $("btnCalibrate").disabled = true;
+  run.correctionUntil = 0;
+  showCorrection();
   run.frameEpoch += 1;
   clearTimeout(run.next);
   run.recalibration = (async () => {

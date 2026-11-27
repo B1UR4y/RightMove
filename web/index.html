@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Верное движение</title>
-  <link rel="stylesheet" href="style.css?v=assessment-2">
+  <link rel="stylesheet" href="style.css?v=corrections-1">
 </head>
 <body>
   <header class="topbar">
@@ -72,8 +72,9 @@
         <p id="assessmentScore"></p>
         <p id="assessmentSummary"></p>
       </section>
-      <div class="hint" id="hint">
+      <div class="hint" id="hint" data-correction="">
         <b id="phase" class="hidden"></b>
+        <span id="correction" role="status"></span>
         <span id="cue">Для начала тренировки нажмите «Начать»</span>
       </div>
     </section>
@@ -124,6 +125,6 @@
       <tbody id="repRows"></tbody>
     </table>
   </dialog>
-  <script src="script.js?v=assessment-2"></script>
+  <script src="script.js?v=corrections-1"></script>
 </body>
 </html>
