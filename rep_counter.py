@@ -60,10 +60,12 @@ class ExerciseConfig:
     min_rep_s: float = 0.5       # быстрее — скорее всего шум
     max_rep_s: float = 10.0      # дольше — человек застрял внизу или ушёл из кадра
     fps: float = 30.0            # Penn Action — 30 кадров/с
+    check_hip_drop: bool = False
 
 
 SQUAT = ExerciseConfig(
     name="squat",
+    check_hip_drop=True,
     angle_triplets=(
         ("left_hip", "left_knee", "left_ankle"),
         ("right_hip", "right_knee", "right_ankle"),
@@ -191,10 +193,13 @@ class RepFSM:
 
     def __init__(self, config):
         self.config = config
+        self.pose_window = max(2, round(config.fps * 0.12))
+        self.poses = deque(maxlen=math.ceil(config.max_rep_s * config.fps) + 2 * self.pose_window + 2)
         self.reset()
         self.count = 0
 
     def reset(self):
+        self.poses.clear()
         self.state = UP
         self.top = None
         self.top_frame = None
@@ -210,7 +215,32 @@ class RepFSM:
         self.bottom = None
         self.bottom_frame = None
 
+    def _has_hip_drop(self, frame_idx):
+        window = self.pose_window
+        upper = (self.start_frame - window + 1, self.start_frame)
+        lower = (self.bottom_frame - window, min(frame_idx, self.bottom_frame + window))
+        descent = []
+        for side in (0, 1):
+            top = [pose[side] for idx, pose in self.poses
+                   if upper[0] <= idx <= upper[1] and pose[side] is not None]
+            bottom = [pose[side] for idx, pose in self.poses
+                      if lower[0] <= idx <= lower[1] and pose[side] is not None]
+            if len(top) < 2 or len(bottom) < 2:
+                continue
+            top_y, top_gap, torso = np.median(top, axis=0)
+            bottom_y, bottom_gap, _ = np.median(bottom, axis=0)
+            descent.append(((bottom_y - top_y) / torso, (bottom_gap - top_gap) / torso))
+        if not descent:
+            return True
+        # Ход таза измеряем в долях длины торса. Нижняя граница отсекает
+        # покачивания, верхняя сохраняет возможность оценить неглубокий присед.
+        amplitude = self.top - self.bottom
+        minimum = max(0.09, min(0.20, (amplitude / 100.0) ** 2))
+        return min(np.mean(descent, axis=0)) >= minimum
+
     def _event(self, frame_idx, valid, reason=""):
+        if self.config.check_hip_drop and not self._has_hip_drop(frame_idx):
+            return None
         if valid:
             self.count += 1
         return RepEvent(
@@ -225,9 +255,11 @@ class RepFSM:
             reason=reason,
         )
 
-    def update(self, angle, frame_idx):
+    def update(self, angle, frame_idx, pose=None):
         """angle: сглаженный угол или nan. Возвращает RepEvent, когда повторение завершилось."""
         cfg = self.config
+        if pose is not None:
+            self.poses.append((frame_idx, pose))
         if math.isnan(angle):
             # Точек не видно: автомат замирает в текущем состоянии и продолжает,
             # когда точки вернутся. Застрявшее повторение сбросит проверка max_rep_s.
@@ -316,7 +348,18 @@ class RepCounter:
 
     def update(self, kpts):
         sample = self.signal.update(kpts)
-        event = self.fsm.update(sample.smoothed, sample.frame_idx)
+        pose = None
+        if self.config.check_hip_drop and kpts is not None:
+            pose = []
+            for indices in ((5, 11, 15), (6, 12, 16)):
+                points = kpts[list(indices)]
+                if not np.isfinite(points).all() or min(points[:, 2]) < self.config.min_conf:
+                    pose.append(None)
+                    continue
+                shoulder, hip, ankle = points[:, :2]
+                torso = math.hypot(*(shoulder - hip))
+                pose.append((hip[1], hip[1] - ankle[1], torso) if torso > 1 else None)
+        event = self.fsm.update(sample.smoothed, sample.frame_idx, pose)
         return sample, event
 
 

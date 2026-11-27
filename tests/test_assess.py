@@ -109,7 +109,7 @@ class Attempts(unittest.TestCase):
         self.assertEqual(r.rules["E1"], ERR)
 
     def test_partial_attempt_not_counted(self):
-        counter, r = self.one(bottom=148.0, lean_bottom=5.0)  # размах 22 < 30, но >= 15
+        counter, r = self.one(top=165.0, bottom=137.0, lean_bottom=5.0)  # размах 28°
         self.assertEqual(counter.count, 0)
         self.assertEqual(r.category, CAT_PARTIAL)
         self.assertEqual(r.rules["E1"], ERR)
@@ -118,6 +118,18 @@ class Attempts(unittest.TestCase):
         counter, asr, out = run(synth.squat_frames(bottom=160.0, lean_bottom=3.0))  # размах 10
         self.assertEqual(counter.count, 0)
         self.assertEqual(out, [])
+
+    def test_knee_cycle_with_stationary_hips_is_ignored(self):
+        for bottom in (137.0, 120.0):
+            with self.subTest(bottom=bottom):
+                frames = [pose.copy() for pose in synth.squat_frames(top=165.0, bottom=bottom)]
+                standing_hip_y = frames[0][11, 1]
+                for pose in frames:
+                    # Сохраняем углы суставов, удерживая таз на одной высоте.
+                    pose[:, 1] += standing_hip_y - pose[11, 1]
+                counter, _, out = run(frames)
+                self.assertEqual(counter.count, 0)
+                self.assertEqual(out, [])
 
     def test_e2_lean(self):
         _, r = self.one(lean_bottom=55.0)
