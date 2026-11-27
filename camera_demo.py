@@ -188,7 +188,11 @@ def draw_skeleton(img, kpts, conf_th=0.3):
     if kpts is None:
         return
     pts = [(int(x), int(y), s) for x, y, s in kpts]
-    for a, b in COCO_SKELETON:
+    edges = COCO_SKELETON
+    if len(pts) == 26:
+        edges = edges + [(17, 18), (5, 18), (6, 18), (18, 19), (11, 19), (12, 19),
+                         (15, 24), (24, 20), (20, 22), (16, 25), (25, 21), (21, 23)]
+    for a, b in edges:
         if pts[a][2] < conf_th or pts[b][2] < conf_th:
             continue
         color = (0, 220, 255) if a in SIGNAL_JOINTS and b in SIGNAL_JOINTS else (255, 128, 0)
@@ -278,7 +282,8 @@ def main():
         return
 
     print(f"Загрузка модели... (вычисления: {'видеокарта' if DEVICE == 0 else 'процессор'})")
-    model = YOLO(MODEL_FILE)
+    model_path = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--model=")), MODEL_FILE)
+    model = YOLO(model_path)
     model.predict(np.zeros((480, 640, 3), dtype=np.uint8), device=DEVICE, verbose=False)
 
     # Замер реального FPS (камера + модель): пороги в секундах пересчитываются в кадры по нему

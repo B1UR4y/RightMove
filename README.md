@@ -15,6 +15,14 @@
 python camera_demo.py "C:\Videos\squats.mp4" --window
 ```
 
+Для проверки с веб-камерой на локально обученных весах Halpe-26:
+
+```powershell
+python camera_demo.py --window --model=data/training_runs/halpe26_v1/weights/best.pt
+```
+
+Приложение показывает дополнительные точки стоп. Для оценки техники обе модели используют одни и те же правила.
+
 ## Проверка
 
 ```powershell
