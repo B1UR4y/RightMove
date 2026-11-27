@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Верное движение</title>
+  <link rel="stylesheet" href="style.css?v=assessment-2">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="index.html">Верное <span>движение</span></a>
+
+    <!-- Профиль: выпадающее меню -->
+    <details class="profile">
+      <summary>Профиль</summary>
+      <form class="profile-menu">
+        <p class="profile-title">Параметры тела</p>
+
+        <label>Рост, см
+          <input type="number" name="height" min="100" max="250" required>
+        </label>
+        <label>Вес, кг
+          <input type="number" step="0.1" name="weight" min="30" max="250" required>
+        </label>
+
+        <p class="profile-sub">По желанию</p>
+        <label>Пол
+          <select name="sex">
+            <option value="">Не указывать</option>
+            <option value="m">Мужской</option>
+            <option value="f">Женский</option>
+          </select>
+        </label>
+        <div class="row3">
+          <label>Грудь, см <input type="number" name="chest"></label>
+          <label>Талия, см <input type="number" name="waist"></label>
+          <label>Бёдра, см <input type="number" name="hips"></label>
+        </div>
+
+        <button class="btn" type="submit">Сохранить</button>
+      </form>
+    </details>
+  </header>
+
+  <main class="app">
+    <section class="stage" aria-label="Тренировка">
+      <img class="video" id="demo" src="img/squat-pose.webp" alt="Пример приседания">
+      <video class="video camera hidden" id="camera" autoplay muted playsinline></video>
+      <canvas class="video camera hidden" id="skeleton" aria-hidden="true"></canvas>
+      <span class="badge badge-exercise" id="exerciseName">Приседания <span id="previewLabel">· пример</span></span>
+      <span class="badge badge-timer" id="timer">00:00</span>
+      <div class="reps"><span>Повторения</span><b id="reps">0</b></div>
+      <div class="countdown hidden" id="countdown">
+        <b id="countdownNum">10</b>
+        <span>Встаньте боком к камере и выпрямитесь</span>
+      </div>
+      <div class="camera-error hidden" id="cameraError" role="alert"></div>
+      <section class="assessment-panel hidden" id="calibrationPanel" aria-label="Калибровка">
+        <strong>Калибровка</strong>
+        <span id="calibrationPercent">0%</span>
+        <progress id="calibrationProgress" max="100" value="0" aria-label="Ход калибровки"></progress>
+        <p id="calibrationStatus">Встаньте боком и стойте спокойно.</p>
+      </section>
+      <section class="assessment-panel hidden" id="assessmentPanel" aria-label="Оценка техники">
+        <p id="assessmentTitle" role="status">Ожидание первой попытки</p>
+        <ul class="rule-grid" aria-label="Правила оценки">
+          <li><span id="ruleE1" class="rule-mark" data-status="unknown"></span></li>
+          <li><span id="ruleE2" class="rule-mark" data-status="unknown"></span></li>
+          <li><span id="ruleE3" class="rule-mark" data-status="unknown"></span></li>
+          <li><span id="ruleE4" class="rule-mark" data-status="unknown"></span></li>
+        </ul>
+        <p id="assessmentScore"></p>
+        <p id="assessmentSummary"></p>
+      </section>
+      <div class="hint" id="hint">
+        <b id="phase" class="hidden"></b>
+        <span id="cue">Для начала тренировки нажмите «Начать»</span>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Управление тренировкой">
+      <div class="control-select">
+        <span>Упражнение</span>
+        <div class="exercise-picker">
+          <button id="exercise" type="button" aria-expanded="false" aria-controls="choices">Приседания ▾</button>
+          <div id="choices" class="choices hidden" aria-label="Выбор упражнения">
+            <button type="button" data-exercise="squat">Приседания</button>
+            <button type="button" data-exercise="pushup">Отжимания</button>
+            <button type="button" data-exercise="situp">Пресс (подъёмы корпуса)</button>
+          </div>
+        </div>
+      </div>
+      <label class="switch"><input id="showSkeleton" type="checkbox" checked> Показывать скелет</label>
+      <div class="buttons">
+        <button class="btn" type="button" id="btnStart">Начать</button>
+        <button class="btn btn-stop" type="button" id="btnStop" disabled>Завершить</button>
+        <button class="btn btn-ghost hidden" type="button" id="btnCalibrate" disabled>Калибровать</button>
+        <button class="btn btn-ghost" type="button" id="btnReport" disabled>Отчёт</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="development" aria-labelledby="devTitle">
+    <p class="report-label">Выбор упражнения</p>
+    <h2 id="devTitle"></h2>
+    <p>Это упражнение ещё в разработке. Сейчас доступны приседания.</p>
+    <form method="dialog"><button class="btn">Понятно</button></form>
+  </dialog>
+  <dialog id="report" aria-labelledby="reportTitle">
+    <form method="dialog"><button class="modal-close" aria-label="Закрыть">×</button></form>
+    <p class="report-label">Отчёт по тренировке</p>
+    <h2 id="reportTitle">Приседания</h2>
+    <div class="tiles">
+      <div class="tile"><span>Повторения</span><b id="reportReps"></b></div>
+      <div class="tile"><span>Неполные приседы</span><b id="reportShort"></b></div>
+      <div class="tile"><span>Время</span><b id="reportTime"></b></div>
+    </div>
+    <p class="report-score"><strong>Оценка подхода</strong> <span id="reportRating">—</span></p>
+    <p class="report-label" id="reportDetails"></p>
+    <h3>Замечания по повторениям</h3>
+    <p id="reportEmpty">За тренировку попыток не зарегистрировано.</p>
+    <table id="repTable" class="hidden">
+      <thead><tr><th scope="col">Повторение</th><th scope="col">Замечания</th><th scope="col">Балл</th></tr></thead>
+      <tbody id="repRows"></tbody>
+    </table>
+  </dialog>
+  <script src="script.js?v=assessment-2"></script>
+</body>
+</html>
